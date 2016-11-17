@@ -17,17 +17,18 @@ public class CallKeypadActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private ViewPagerAdapter viewPagerAdapter;
-    private TextView txtPhoneNumber;
     private ImageView iconHome;
     private ImageView iconInbox;
     private ImageView iconStar;
     private ImageView iconUpload;
+    static CallKeypadActivity ma;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call_keypad);
+        ma = this;
 
         /*
         Assigning view variables to thier respective view in xml
@@ -140,71 +141,12 @@ public class CallKeypadActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                switch (position) {
-                    case 0:
-                        /*
-                        setting Home as White and rest grey
-                        and like wise for all other positions
-                         */
-
-                        iconHome.setImageResource(R.drawable.icon_home_press);
-                        iconInbox.setImageResource(R.drawable.icon_event);
-                        iconStar.setImageResource(R.drawable.icon_personal);
-                        iconUpload.setImageResource(R.drawable.icon_upload);
-                        break;
-                    case 1:
-                        iconHome.setImageResource(R.drawable.icon_home);
-                        iconInbox.setImageResource(R.drawable.icon_event_press);
-                        iconStar.setImageResource(R.drawable.icon_personal);
-                        iconUpload.setImageResource(R.drawable.icon_upload);
-                        break;
-                    case 2:
-                        iconHome.setImageResource(R.drawable.icon_home);
-                        iconInbox.setImageResource(R.drawable.icon_event);
-                        iconStar.setImageResource(R.drawable.icon_personal_press);
-                        iconUpload.setImageResource(R.drawable.icon_upload);
-                        break;
-                    case 3:
-                        iconHome.setImageResource(R.drawable.icon_home);
-                        iconInbox.setImageResource(R.drawable.icon_event);
-                        iconStar.setImageResource(R.drawable.icon_personal);
-                        iconUpload.setImageResource(R.drawable.icon_upload_press);
-                        break;
-                    default:
-                        break;
-                }
+                changeTab(position);
             }
 
             @Override
             public void onPageSelected(int position) {
-                switch (position) {
-                    case 0:
-                        iconHome.setImageResource(R.drawable.icon_home_press);
-                        iconInbox.setImageResource(R.drawable.icon_event);
-                        iconStar.setImageResource(R.drawable.icon_personal);
-                        iconUpload.setImageResource(R.drawable.icon_upload);
-                        break;
-                    case 1:
-                        iconHome.setImageResource(R.drawable.icon_home);
-                        iconInbox.setImageResource(R.drawable.icon_event_press);
-                        iconStar.setImageResource(R.drawable.icon_personal);
-                        iconUpload.setImageResource(R.drawable.icon_upload);
-                        break;
-                    case 2:
-                        iconHome.setImageResource(R.drawable.icon_home);
-                        iconInbox.setImageResource(R.drawable.icon_event);
-                        iconStar.setImageResource(R.drawable.icon_personal_press);
-                        iconUpload.setImageResource(R.drawable.icon_upload);
-                        break;
-                    case 3:
-                        iconHome.setImageResource(R.drawable.icon_home);
-                        iconInbox.setImageResource(R.drawable.icon_event);
-                        iconStar.setImageResource(R.drawable.icon_personal);
-                        iconUpload.setImageResource(R.drawable.icon_upload_press);
-                        break;
-                    default:
-                        break;
-                }
+
             }
 
             @Override
@@ -216,36 +158,9 @@ public class CallKeypadActivity extends AppCompatActivity {
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
                 int position = tab.getPosition();
-                switch (position) {
-                    case 0:
-                        iconHome.setImageResource(R.drawable.icon_home_press);
-                        iconInbox.setImageResource(R.drawable.icon_event);
-                        iconStar.setImageResource(R.drawable.icon_personal);
-                        iconUpload.setImageResource(R.drawable.icon_upload);
-                        break;
-                    case 1:
-                        iconHome.setImageResource(R.drawable.icon_home);
-                        iconInbox.setImageResource(R.drawable.icon_event_press);
-                        iconStar.setImageResource(R.drawable.icon_personal);
-                        iconUpload.setImageResource(R.drawable.icon_upload);
-                        break;
-                    case 2:
-                        iconHome.setImageResource(R.drawable.icon_home);
-                        iconInbox.setImageResource(R.drawable.icon_event);
-                        iconStar.setImageResource(R.drawable.icon_personal_press);
-                        iconUpload.setImageResource(R.drawable.icon_upload);
-                        break;
-                    case 3:
-                        iconHome.setImageResource(R.drawable.icon_home);
-                        iconInbox.setImageResource(R.drawable.icon_event);
-                        iconStar.setImageResource(R.drawable.icon_personal);
-                        iconUpload.setImageResource(R.drawable.icon_upload_press);
-                        break;
-                    default:
-                        break;
-                }
+                viewPager.setCurrentItem(position);
+                changeTab(position);
             }
 
             @Override
@@ -261,6 +176,8 @@ public class CallKeypadActivity extends AppCompatActivity {
 
 
     }
+
+
 
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
@@ -283,5 +200,36 @@ public class CallKeypadActivity extends AppCompatActivity {
 //
 //        return super.onOptionsItemSelected(item);
 //    }
+
+
+    private void changeTab(int position) {
+        switch (position) {
+            case 0:
+                changeTab();
+                iconHome.setImageResource(R.drawable.icon_home_press);
+                break;
+            case 1:
+                changeTab();
+                iconInbox.setImageResource(R.drawable.icon_event_press);
+                break;
+            case 2:
+                changeTab();
+                iconStar.setImageResource(R.drawable.icon_personal_press);
+                break;
+            case 3:
+                changeTab();
+                iconUpload.setImageResource(R.drawable.icon_upload_press);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void changeTab() {
+        iconHome.setImageResource(R.drawable.icon_home);
+        iconInbox.setImageResource(R.drawable.icon_event);
+        iconStar.setImageResource(R.drawable.icon_personal);
+        iconUpload.setImageResource(R.drawable.icon_upload);
+    }
 
 }

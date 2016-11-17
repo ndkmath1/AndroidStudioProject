@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 /**
  * Created by khanh on 13/11/2016.
@@ -24,6 +25,7 @@ public class HomeFragment extends Fragment {
     ImageButton btnCall;
     ImageButton btnDel;
     StringBuilder stringBuilder;
+    TextView txtName, txtPhone;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -114,7 +116,8 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
+        txtName = (TextView) mRootView.findViewById(R.id.name);
+        txtPhone = (TextView) mRootView.findViewById(R.id.phone);
 
         return mRootView;
     }
@@ -133,13 +136,27 @@ public class HomeFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
-            int position = txtPhoneNumber.getSelectionStart();
-//            stringBuilder.append(value);
-            stringBuilder.insert(position, value);
-            txtPhoneNumber.setText(stringBuilder);
             if (txtPhoneNumber.hasFocus()) {
+                int position = txtPhoneNumber.getSelectionStart();
+//            stringBuilder.append(value);
+                stringBuilder.insert(position, value);
+                txtPhoneNumber.setText(stringBuilder);
                 txtPhoneNumber.setSelection(position + 1);
+            } else {
+                stringBuilder.append(value);
+                txtPhoneNumber.setText(stringBuilder);
             }
+
+
+            ContactMatching contactMatching = new ContactMatching(stringBuilder.toString());
+            Contact contact = contactMatching.getContactMatching();
+            if (contact != null) {
+                txtName.setText(contact.getName());
+                txtPhone.setText(contact.getPhoneNumber());
+            } else {
+
+            }
+
         }
     }
 
